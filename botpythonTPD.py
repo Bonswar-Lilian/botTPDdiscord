@@ -24,10 +24,8 @@ async def play(ctx, url : str):
 
     if not "youtube" in ctx.message.content:
         ctx.message.content = ctx.message.content[5:]
-        print(ctx.message.content)
         videosSearch = VideosSearch(ctx.message.content, limit=1)
         x = videosSearch.result()['result'][0]['link']
-        print(str(x))
         url = x
     ydl_opts = {
         'format': 'bestaudio/best',
