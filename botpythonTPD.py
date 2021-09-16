@@ -17,10 +17,18 @@ async def play(ctx, url : str):
         await ctx.send("Wait for the current playing music to end or use the 'stop' command")
         return
 
-    voiceChannel = discord.utils.get(ctx.guild.voice_channels, name=str(ctx.author.voice.channel))
+    channel = ctx.author.voice.channel
+    voiceChannel = discord.utils.get(ctx.guild.voice_channels, name=str(channel))
     await voiceChannel.connect()
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
 
+    if not "youtube" in ctx.message.content:
+        ctx.message.content = ctx.message.content[5:]
+        print(ctx.message.content)
+        videosSearch = VideosSearch(ctx.message.content, limit=1)
+        x = videosSearch.result()['result'][0]['link']
+        print(str(x))
+        url = x
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
