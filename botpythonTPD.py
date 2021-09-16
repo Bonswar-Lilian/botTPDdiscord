@@ -35,6 +35,7 @@ async def play(ctx, url: str):
         videosSearch = VideosSearch(ctx.message.content, limit=1)
         x = videosSearch.result()['result'][0]['link']
         url = x
+        await ctx.send(x)
 
 
 
@@ -83,7 +84,7 @@ async def resume(ctx):
         await ctx.send("C'est pas en pause UwU")
 
 
-@client.command()
+@client.command(name='skip', aliases=['s'])
 async def skip(ctx):
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
