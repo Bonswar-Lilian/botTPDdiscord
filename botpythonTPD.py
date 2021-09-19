@@ -18,7 +18,7 @@ players = {}
 queues = {}
 
 
-def donne_url(url, ctx):
+async def donne_url(url, ctx):
     x = str(url)
     if '-play' in x:
         x = x[6:]
@@ -28,17 +28,18 @@ def donne_url(url, ctx):
         x = 'https://www.youtube.com/watch?v='+x[17:]
         return x
     if "loca" in x:
-        ctx.send("Va baiser tes morts sale pd")
-        return "https://www.youtube.com/watch?v=pWkyY5uyx10&ab_channel=Arsenic"
+        await ctx.send("Va baiser tes morts sale pd")
+        return "https://www.youtube.com/watch?v=VmyPUPcrCFw"
     if "shakira" in x:
-        ctx.send("Va baiser tes morts sale fdp")    
-        return "https://www.youtube.com/watch?v=pWkyY5uyx10&ab_channel=Arsenic"
+        await ctx.send("Va baiser tes morts sale fdp")
+        return "https://www.youtube.com/watch?v=VmyPUPcrCFw"
     if not "youtube" in x:
         videosSearch = VideosSearch(x, limit=1)
         url2 = videosSearch.result()['result'][0]['link']
         return url2
     if "youtube" in x:
         return x
+
 
 
 
