@@ -24,12 +24,16 @@ def donne_url(url, ctx):
         x = x[6:]
     if '-p' in x:
         x = x[3:]
+    if 'youtu.be' in x:
+        x = 'https://www.youtube.com/watch?v='+x[17:]
+        return x
     if not "youtube" in x:
         videosSearch = VideosSearch(x, limit=1)
         url2 = videosSearch.result()['result'][0]['link']
         return url2
     if "youtube" in x:
         return x
+
 
 
 client = commands.Bot(command_prefix="-")
