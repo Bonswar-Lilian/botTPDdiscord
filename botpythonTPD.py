@@ -10,6 +10,7 @@ from discord import FFmpegPCMAudio
 from youtube_dl import YoutubeDL
 from discord.ext import commands
 from discordSuperUtils import MusicManager
+import discordSuperUtils
 
 connected = False
 
@@ -56,6 +57,10 @@ async def on_play(ctx, player):
 async def play(ctx,):
     global connected
     URL = donne_url(ctx.message.content, ctx)
+    if URL is None:
+        await ctx.send("J'ai pas trouvé le son")
+        return
+
     voiceChannel = discord.utils.get(ctx.guild.voice_channels, name=str(ctx.author.voice.channel))
     YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist': 'True'}
     FFMPEG_OPTIONS = {
@@ -78,16 +83,38 @@ async def play(ctx,):
 
 @client.command(name='showqueue', aliases=["sq","queue"])
 async def showQueue(ctx):
+    await ctx.send("Tema la grosse queue!")
     formatted_queue = [f"Title: '{x.title}\nRequester: {x.requester.mention}" for x in (await MusicManager.get_queue(ctx)).queue]
     embeds = discordSuperUtils.generate_embeds(formatted_queue,
-                                               "Queue",
-                                               f"Now Playing: {await MusicManager.now_playing(ctx)}",
+                                               "La queue : ",
+                                               f"En ce moment: {await MusicManager.now_playing(ctx)}",
                                                25,
                                                string_format="{}")
 
     page_manager = discordSuperUtils.PageManager(ctx, embeds, public=True)
     await page_manager.run()
-    
+
+@client.command(name='purge', aliases=["pq"])
+async def purgeQueue(ctx):
+    await MusicManager.clear()
+    await ctx.send("La queue est purgée")
+
+@client.command(name='loop', aliases=["l"])
+async def loop(ctx):
+    isLooping = await MusicManager.loop(ctx)
+    if isLooping:
+        await ctx.send("Mode loop activé")
+    else:
+        await ctx.send("Mode loop desactivé")
+
+@client.command(name='loopqueue', aliases=["lq"])
+async def loopQueue(ctx):
+    isLooping = await MusicManager.queueloop(ctx)
+    if isLooping:
+        await ctx.send("Mode loop de la queue activé")
+    else:
+        await ctx.send("Mode loop de la queue desactivé")
+
 
 @client.command()
 async def leave(ctx):
