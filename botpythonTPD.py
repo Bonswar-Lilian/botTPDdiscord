@@ -55,7 +55,7 @@ async def on_play(ctx, player):
 @client.command(name='play', aliases=['p'])
 async def play(ctx,):
     global connected
-    URL = donne_url(ctx.message.content, ctx)
+    URL = await donne_url(ctx.message.content, ctx)
     voiceChannel = discord.utils.get(ctx.guild.voice_channels, name=str(ctx.author.voice.channel))
     YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist': 'True'}
     FFMPEG_OPTIONS = {
