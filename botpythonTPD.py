@@ -27,6 +27,12 @@ def donne_url(url, ctx):
     if 'youtu.be' in x:
         x = 'https://www.youtube.com/watch?v='+x[17:]
         return x
+    if "loca" in x:
+        ctx.send("Va baiser tes morts sale pd")
+        return "https://www.youtube.com/watch?v=pWkyY5uyx10&ab_channel=Arsenic"
+    if "shakira" in x:
+        ctx.send("Va baiser tes morts sale fdp")    
+        return "https://www.youtube.com/watch?v=pWkyY5uyx10&ab_channel=Arsenic"
     if not "youtube" in x:
         videosSearch = VideosSearch(x, limit=1)
         url2 = videosSearch.result()['result'][0]['link']
@@ -66,10 +72,13 @@ async def play(ctx,):
 
     if players:
         if await MusicManager.queue_add(players=players, ctx=ctx) and not await MusicManager.play(ctx):
-            await ctx.send("Ajouter a la grosse QUEUE")
+            await ctx.send("Ajouté a la grosse QUEUE")
 
 
-
+@client.command(name='showqueue', aliases=["sq"])
+async def showQueue(ctx):
+    x = await MusicManager.get_queue(ctx)
+    print(x)
 
 @client.command()
 async def leave(ctx):
@@ -78,7 +87,7 @@ async def leave(ctx):
         await voice.disconnect()
         connected = False
     else:
-        await ctx.send("The bot is not connected to a voice channel.")
+        await ctx.send("Gros con le bot est pas connecté")
 
 
 @client.command()
