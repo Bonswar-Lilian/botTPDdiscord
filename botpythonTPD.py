@@ -76,10 +76,18 @@ async def play(ctx,):
             await ctx.send("Ajouté a la grosse QUEUE")
 
 
-@client.command(name='showqueue', aliases=["sq"])
+@client.command(name='showqueue', aliases=["sq","queue"])
 async def showQueue(ctx):
-    x = await MusicManager.get_queue(ctx)
-    print(x)
+    formatted_queue = [f"Title: '{x.title}\nRequester: {x.requester.mention}" for x in (await MusicManager.get_queue(ctx)).queue]
+    embeds = discordSuperUtils.generate_embeds(formatted_queue,
+                                               "Queue",
+                                               f"Now Playing: {await MusicManager.now_playing(ctx)}",
+                                               25,
+                                               string_format="{}")
+
+    page_manager = discordSuperUtils.PageManager(ctx, embeds, public=True)
+    await page_manager.run()
+    
 
 @client.command()
 async def leave(ctx):
