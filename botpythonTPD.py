@@ -57,7 +57,7 @@ async def on_play(ctx, player):
 async def play(ctx,):
     global connected
 
-    URL = awaitdonne_url(ctx.message.content, ctx)
+    URL = await donne_url(ctx.message.content, ctx)
     if URL is None:
         await ctx.send("J'ai pas trouvé le son")
         return
