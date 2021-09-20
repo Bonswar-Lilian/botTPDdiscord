@@ -47,9 +47,14 @@ async def donne_url(url, ctx):
 client = commands.Bot(command_prefix="-")
 MusicManager = MusicManager(client, spotify_support=False)
 
-@MusicManager.event
+@MusicManager.event()
 async def on_play(ctx, player):
-    await ctx.send(f"Now playing: {player.title}")
+    await ctx.send(f"ça turn up sur : {player.title}")
+
+@MusicManager.event()
+async def on_inactivity_disconnect(ctx):
+    print("Quitté a cause d'inactivité")
+
 
 
 
