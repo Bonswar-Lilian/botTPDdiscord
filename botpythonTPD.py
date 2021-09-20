@@ -62,7 +62,7 @@ async def on_inactivity_disconnect(ctx):
 async def play(ctx,):
     global connected
 
-    URL = awaitdonne_url(ctx.message.content, ctx)
+    URL = await donne_url(ctx.message.content, ctx)
     if URL is None:
         await ctx.send("J'ai pas trouvé le son")
         return
